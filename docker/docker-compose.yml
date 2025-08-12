@@ -1,0 +1,17 @@
+services:
+  time-api:
+    # Construye la imagen usando el Dockerfile de este directorio
+    build: .
+    container_name: time-api
+    # Mapea el puerto 3000 del host al 3000 del contenedor
+    ports:
+      - "3000:3000"
+    # Define variables de entorno para la app (Express usa PORT)
+    environment:
+      - PORT=3000
+      # TIMEZONE define la zona horaria para el campo time_local (por defecto UTC)
+      - TIMEZONE=America/Argentina/Buenos_Aires
+    # Reinicia el contenedor automáticamente salvo cuando se detenga manualmente
+    restart: unless-stopped
+
+

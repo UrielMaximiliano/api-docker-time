@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: time-api
+    env: node
+    rootDir: docker
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    autoDeploy: true
+    plan: free
+    envVars:
+      - key: TIMEZONE
+        value: America/Argentina/Buenos_Aires
+      # Render provee PORT automáticamente; Express ya lo usa
+      - key: PORT
+        value: 10000
+
+
