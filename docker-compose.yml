@@ -14,4 +14,16 @@ services:
     # Reinicia el contenedor automáticamente salvo cuando se detenga manualmente
     restart: unless-stopped
 
+  consulta-api-time:
+    # Sirve el HTML estático que consulta la API
+    build:
+      context: ./consulta-api-time
+      dockerfile: Dockerfile
+    container_name: consulta-api-time
+    ports:
+      - "8080:80"
+    depends_on:
+      - time-api
+    restart: unless-stopped
+
 

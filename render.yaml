@@ -11,3 +11,12 @@ services:
     envVars:
       - key: TIMEZONE
         value: America/Argentina/Buenos_Aires
+  - type: web
+    name: consulta-api-time
+    env: docker
+    rootDir: .
+    dockerfilePath: consulta-api-time/Dockerfile
+    dockerContext: consulta-api-time
+    autoDeploy: true
+    plan: free
+    healthCheckPath: /

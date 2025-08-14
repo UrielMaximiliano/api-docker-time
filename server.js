@@ -15,6 +15,15 @@ app.use((_req, res, next) => {
   next();
 });
 
+// Habilita CORS para permitir que el HTML (en otro contenedor) consuma la API
+app.use((_req, res, next) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  if (_req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
 function buildTimePayload() {
   const now = new Date();
   const isoUtc = now.toISOString();
