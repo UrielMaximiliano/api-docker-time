@@ -7,8 +7,7 @@ const PORT = process.env.PORT || 3000;
 // Zona horaria configurable: usa TIMEZONE o TZ; por defecto UTC
 const TIMEZONE = process.env.TIMEZONE || process.env.TZ || 'UTC';
 
-// GET /api/time -> devuelve la hora actual
-app.get('/api/time', (_req, res) => {
+function buildTimePayload() {
   const now = new Date();
   const isoUtc = now.toISOString();
   const local = new Intl.DateTimeFormat('es-AR', {
@@ -22,17 +21,22 @@ app.get('/api/time', (_req, res) => {
     hour12: false,
   }).format(now);
 
-  res.json({
-    time: isoUtc,            // ISO en UTC (estable para integraciones)
-    time_local: local,       // Hora local formateada segun TIMEZONE
+  return {
+    time: isoUtc,
+    time_local: local,
     timezone: TIMEZONE,
     epoch_ms: now.getTime(),
-  });
+  };
+}
+
+// GET /api/time -> devuelve la hora actual
+app.get('/api/time', (_req, res) => {
+  res.json(buildTimePayload());
 });
 
-// Endpoints de healthcheck y raíz
+// Endpoints de healthcheck y raíz devuelven la hora
 app.get(['/', '/health'], (_req, res) => {
-  res.json({ status: 'ok' });
+  res.json(buildTimePayload());
 });
 
 // Manejador 404 para rutas inexistentes
