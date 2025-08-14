@@ -7,6 +7,14 @@ const PORT = process.env.PORT || 3000;
 // Zona horaria configurable: usa TIMEZONE o TZ; por defecto UTC
 const TIMEZONE = process.env.TIMEZONE || process.env.TZ || 'UTC';
 
+// Evita que clientes o proxies cacheen la respuesta: siempre hora actual
+app.use((_req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  next();
+});
+
 function buildTimePayload() {
   const now = new Date();
   const isoUtc = now.toISOString();
