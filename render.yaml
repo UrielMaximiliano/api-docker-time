@@ -3,8 +3,8 @@ services:
     name: time-api
     env: docker
     rootDir: .
-    dockerfilePath: docker/Dockerfile
-    dockerContext: docker
+    dockerfilePath: Dockerfile
+    dockerContext: .
     autoDeploy: true
     plan: free
     healthCheckPath: /health
